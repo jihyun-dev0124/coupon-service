@@ -25,4 +25,12 @@ public class RedisScriptConfig {
         script.setResultType(Long.class);
         return script;
     }
+
+    @Bean
+    public DefaultRedisScript<List> zsetClaimScript() {
+        DefaultRedisScript<List> script = new DefaultRedisScript<>();
+        script.setScriptSource(new ResourceScriptSource(new ClassPathResource("redis/zclaim.lua")));
+        script.setResultType(List.class);
+        return script;
+    }
 }

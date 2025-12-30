@@ -23,11 +23,17 @@ public record DownloadResponse (
         return new DownloadResponse("FAILD", code + ": " + msg, null);
     }
 
+
+    public static DownloadResponse notOpen() {
+        return new DownloadResponse("NOT_OPEN", "현재 발급 가능한 상태가 아닙니다.", null);
+    }
+
     public int httpStatus() {
         return switch (result) {
             case "ACCEPTED" -> HttpStatus.ACCEPTED.value(); //202 (처리중)
             case "SOLD_OUT" -> HttpStatus.CONFLICT.value(); //409
             case "ALREADY_ISSUED" -> HttpStatus.OK.value();
+            case "NOT_OPEN" -> HttpStatus.FORBIDDEN.value();
             default -> HttpStatus.INTERNAL_SERVER_ERROR.value(); //500
         };
     }

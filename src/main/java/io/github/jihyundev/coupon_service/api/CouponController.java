@@ -16,7 +16,7 @@ public class CouponController {
     private final CouponDownloadService couponDownloadService;
 
     @PostMapping("/{couponId}/download")
-    public ResponseEntity<DownloadResponse> download(@PathVariable Long couponId, @RequestParam @NotBlank Long userId) {
+    public ResponseEntity<DownloadResponse> download(@PathVariable String couponId, @RequestParam @NotBlank String userId) {
         DownloadResponse response = couponDownloadService.requestDownload(couponId, userId);
         return ResponseEntity.status(response.httpStatus()).body(response);
     }

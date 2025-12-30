@@ -29,6 +29,9 @@ public class CouponDownloadService {
     private static final String EVENT_TYPE = "COUPON_ISSUE_REQUESTED";
     private static final String TOPIC = "coupon.issue.requested";
 
+    private static String openKey(String couponId) {
+        return "coupon:campaign:open:"+couponId;
+    }
     private static String stockKey(String couponId) {
         return "coupon:stock:"+couponId;
     }
@@ -45,7 +48,7 @@ public class CouponDownloadService {
      * @return
      */
     @Transactional
-    public DownloadResponse requestDownload(String couponId, Long userId) {
+    public DownloadResponse requestDownload(String couponId, String userId) {
         Long result;
         try {
             result = redis.execute(
@@ -62,6 +65,7 @@ public class CouponDownloadService {
         }
 
         //0:sold out, 2:already
+        if (result == 3L) return DownloadResponse.notOpen();
         if (result == 0L) return DownloadResponse.soldOut();
         if (result == 2L) return DownloadResponse.alreadyIssued();
 

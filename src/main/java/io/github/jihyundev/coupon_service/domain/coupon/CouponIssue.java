@@ -23,10 +23,10 @@ public class CouponIssue {
     private Long id;
 
     @Column(name="coupon_id",  nullable = false)
-    private Long couponId;
+    private String couponId;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column(name="issued_at", nullable = false)
     private Instant issuedAt;

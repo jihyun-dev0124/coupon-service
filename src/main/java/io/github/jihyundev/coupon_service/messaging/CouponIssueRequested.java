@@ -9,6 +9,6 @@ import java.time.Instant;
 public record CouponIssueRequested (
         String eventId,
         String couponId,
-        Long userId,
+        String userId,
         Instant requestedAt
 ){}
